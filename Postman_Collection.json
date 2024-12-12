@@ -1,0 +1,171 @@
+{
+    "info": {
+      "_postman_id": "e3bfc1c3-61d0-4324-8bff-827de7e0f7e4",
+      "name": "GraphQL API with WebSocket",
+      "description": "GraphQL API with WebSocket functionality for real-time updates and JWT authentication.",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "GraphQL Queries",
+        "item": [
+          {
+            "name": "Fetch Users",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"query\":\"{\\n  users {\\n    id\\n    name\\n    email\\n  }\\n}\"}"
+              },
+              "url": {
+                "raw": "http://localhost:4000/graphql",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "4000",
+                "path": [
+                  "graphql"
+                ]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "GraphQL Mutations",
+        "item": [
+          {
+            "name": "Add User",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"query\":\"mutation {\\n  addUser(name: \\\"John Doe\\\", email: \\\"john@example.com\\\", password: \\\"password123\\\") {\\n    message\\n  }\\n}\"}"
+              },
+              "url": {
+                "raw": "http://localhost:4000/graphql",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "4000",
+                "path": [
+                  "graphql"
+                ]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Login User",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"query\":\"mutation {\\n  login(email: \\\"john@example.com\\\", password: \\\"password123\\\")\\n}\"}"
+              },
+              "url": {
+                "raw": "http://localhost:4000/graphql",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "4000",
+                "path": [
+                  "graphql"
+                ]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "GraphQL Subscriptions",
+        "item": [
+          {
+            "name": "Subscribe to New User",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"query\":\"subscription {\\n  userAdded {\\n    id\\n    name\\n    email\\n  }\\n}\"}"
+              },
+              "url": {
+                "raw": "http://localhost:4000/graphql",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "4000",
+                "path": [
+                  "graphql"
+                ]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "WebSocket Example",
+        "item": [
+          {
+            "name": "Send Message to Room",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"query\":\"mutation {\\n  sendMessage(room: \\\"room1\\\", text: \\\"Hello, Room 1!\\\") {\\n    message\\n  }\\n}\"}"
+              },
+              "url": {
+                "raw": "http://localhost:4000/graphql",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "4000",
+                "path": [
+                  "graphql"
+                ]
+              }
+            },
+            "response": []
+          }
+        ]
+      }
+    ]
+  }
+  
