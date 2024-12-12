@@ -1,7 +1,10 @@
+import { PubSub } from 'graphql-subscriptions';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../config/db';
 import { User } from '../types/indexed';
+
+const pubsub = new PubSub();
 
 export const resolvers = {
   Query: {
@@ -12,7 +15,11 @@ export const resolvers = {
   Mutation: {
     addUser: async (_: any, { name, email, password }: { name: string; email: string; password: string }): Promise<string> => {
       const hashedPassword = await bcrypt.hash(password, 10);
-      await db.none('INSERT INTO users (name, email, password) VALUES ($1, $2, $3)', [name, email, hashedPassword]);
+      const newUser = await db.one(
+        'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email',
+        [name, email, hashedPassword]
+      );
+      pubsub.publish('USER_ADDED', { userAdded: newUser });
       return 'User added successfully';
     },
     login: async (_: any, { email, password }: { email: string; password: string }): Promise<string> => {
@@ -22,6 +29,11 @@ export const resolvers = {
       }
       const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
       return token;
+    },
+  },
+  Subscription: {
+    userAdded: {
+      subscribe: () => pubsub.asyncIterator(['USER_ADDED']),
     },
   },
 };
